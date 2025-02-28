@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo 'Cloning Repository...'
+                checkout scm
+            }
+        }
+
+        stage('Compile Java File') {
+            steps {
+                echo 'Compiling Java File...'
+                sh 'javac HelloWorld.java'
+            }
+        }
+
+        stage('Execute Java File') {
+            steps {
+                echo 'Running Java File...'
+                sh 'java HelloWorld'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Java file executed successfully!'
+        }
+        failure {
+            echo 'Build failed! Check console output.'
+        }
+    }
+}
